@@ -1,9 +1,9 @@
 GET http://localhost:8080/users
-# the request above returns a json object with all contacts data for mongodb database. No database is connected.
+# the request above returns a json object with all users data for mongodb database database is connected.
 
 ###
 GET http://localhost:8080/users/640939eacbd8059e3fdbf253
-# the request above returns a json object with a single contact data for mongodb database. No database is connected.
+# the request above returns a json object with a single user data for mongodb database database is connected.
 
 ###
 POST http://localhost:8080/users/ HTTP/1.1 content-type: application/json
@@ -15,7 +15,7 @@ POST http://localhost:8080/users/ HTTP/1.1 content-type: application/json
     "password": "12345"
 }
 
-# the request above creates a json object with a single contact data for mongodb database. No database is connected.
+# the request above creates a json object with a single user data for mongodb database is connected.
 ###
 PUT http://localhost:8080/users HTTP/1.1 content-type: application/json
 
@@ -26,9 +26,206 @@ PUT http://localhost:8080/users HTTP/1.1 content-type: application/json
     "password": "12345"
 }
 
-# the request above updates a json object with a single contact data for mongodb database. No database is connected.
+# the request above updates a json object with a single user data for mongodb database is connected.
 
 ###
 DELETE http://localhost:8080/users/ HTTP/1.1
 
-# the request above deletes a json object with a single contact data for mongodb database. No database is connected.
+# the request above deletes a json object with a single user data for mongodb database is connected.
+
+###
+GET https://cse-341-project2.onrender.com/users HTTP/1.1
+
+# the request above returns a json object with all users data for mongodb database. Database is connected.
+
+###
+
+GET https://cse-341-project2.onrender.com/users/640939eacbd8059e3fdbf253 HTTP/1.1
+
+# the request above returns a json object with a single user data for mongodb database. Database is connected.
+
+###
+
+POST https://cse-341-project2.onrender.com/users/ HTTP/1.1 content-type: application/json
+
+{
+    "firstName": "Rony",
+    "lastName": "Mondal",
+    "email": "rony@email.com",
+    "password": "12345"
+}
+
+# the request above creates a json object with a single user data for mongodb database is connected.
+
+###
+
+PUT https://cse-341-project2.onrender.com/users HTTP/1.1 content-type: application/json
+
+{
+    "firstName": "Rony Nickson",
+    "lastName": "Mondal",
+    "email": "rony.n@email.com",
+    "password": "12345"
+}
+
+# the request above updates a json object with a single user data for mongodb database is connected.
+
+###
+
+DELETE https://cse-341-project2.onrender.com/users/ HTTP/1.1
+
+# the request above deletes a json object with a single user data for mongodb database is connected.
+
+###
+
+GET https://cse-341-project2.onrender.com/games HTTP/1.1
+
+# the request above returns a json object with all games data for mongodb database. Database is connected.
+
+###
+
+GET https://cse-341-project2.onrender.com/games/ HTTP/1.1
+
+# the request above returns a json object with a single game data for mongodb database. Database is connected.
+
+###
+
+POST https://cse-341-project2.onrender.com/games/ HTTP/1.1
+
+{
+      "gameDate": "2020-02-19",
+      "time": "18:30",
+      "homeTeam": "Huracán",
+      "awayTeam": "San Lorenzo",
+      "location": "Estadio La quemita",
+      "attendance": 25212,
+      "finalScore": "2-2",
+      "recap": "San Lorenzo dominated this match from start to finish, with a strong performance from their midfield and attack. Goals from Franco Di Santo and Nicolás Fernández in the first half gave the home team a comfortable lead, and they never looked back from there. Huracán tried to mount a comeback in the second half, but San Lorenzo's defense held firm and they secured a well-deserved victory."
+    }
+
+# the request above creates a json object with a single game data for mongodb database is connected.
+
+###
+
+PUT https://cse-341-project2.onrender.com/games/ HTTP/1.1
+
+{
+      "gameDate": "2020-02-19",
+      "time": "18:30",
+      "homeTeam": "Huracán",
+      "awayTeam": "San Lorenzo",
+      "location": "Estadio La quemita",
+      "attendance": 35123,
+      "finalScore": "2-2",
+      "recap": "San Lorenzo dominated this match from start to finish, with a strong performance from their midfield and attack. Goals from Franco Di Santo and Nicolás Fernández in the first half gave the home team a comfortable lead, and they never looked back from there. Huracán tried to mount a comeback in the second half, but San Lorenzo's defense held firm and they secured a well-deserved victory."
+    }
+
+# the request above updates a json object with a single game data for mongodb database is connected.
+
+###
+
+DELETE https://cse-341-project2.onrender.com/games/ HTTP/1.1
+
+# the request above deletes a json object with a single game data for mongodb database is connected.
+
+###
+GET https://cse-341-project2.onrender.com/players HTTP/1.1
+
+# the request above returns a json object with all players data for mongodb database. Database is connected.
+
+###
+
+GET https://cse-341-project2.onrender.com/players/ HTTP/1.1
+
+# the request above returns a json object with a single player data for mongodb database. Database is connected.
+
+###
+
+POST https://cse-341-project2.onrender.com/players/ HTTP/1.1
+
+{
+      "playerName": "Roberto Abbondanzieri",
+      "position": "Goalkeeper",
+      "height": 1.85,
+      "weight": 75,
+      "birthdate": "1980-10-16",
+      "nationality": "Argentina",
+      "experienceYears": 23
+    }
+
+# the request above creates a json object with a single player data for mongodb database is connected.
+
+###
+
+PUT https://cse-341-project2.onrender.com/players/ HTTP/1.1
+
+{
+      "playerName": "Roberto Abbondanzieri",
+      "position": "Goalkeeper",
+      "height": 1.83,
+      "weight": 85,
+      "birthdate": "1980-10-19",
+      "nationality": "Argentina",
+      "experienceYears": 22
+    }
+
+# the request above updates a json object with a single player data for mongodb database is connected.
+
+###
+
+DELETE https://cse-341-project2.onrender.com/players/ HTTP/1.1
+
+# the request above deletes a json object with a single player data for mongodb database is connected.
+
+###
+
+GET https://cse-341-project2.onrender.com/teams HTTP/1.1
+
+# the request above returns a json object with all teams data for mongodb database. Database is connected.
+
+###
+
+GET https://cse-341-project2.onrender.com/teams/ HTTP/1.1
+
+# the request above returns a json object with a single team data for mongodb database. Database is connected.
+
+###
+
+POST https://cse-341-project2.onrender.com/teams/ HTTP/1.1
+
+{
+        "teamName": "Rosario Central",
+        "coachName": "Eduardo Coudet",
+        "homeCity": "Rosario",
+        "foundationYear": 1905,
+        "stadiumName": "El Gigante de Arroyito",
+        "capacity": 40000,
+        "division": "Superliga Argentina"
+    }
+
+# the request above creates a json object with a single team data for mongodb database is connected.
+
+###
+
+PUT https://cse-341-project2.onrender.com/teams/ HTTP/1.1
+
+{
+        "teamName": "Rosario Central",
+        "coachName": "Edgardo Bauza",
+        "homeCity": "Rosario",
+        "foundationYear": 1905,
+        "stadiumName": "El Gigante de Arroyito",
+        "capacity": 45000,
+        "division": "Superliga Argentina"
+    }
+
+
+# the request above updates a json object with a single team data for mongodb database is connected.
+
+###
+
+DELETE https://cse-341-project2.onrender.com/teams/ HTTP/1.1
+
+# the request above deletes a json object with a single team data for mongodb database is connected.
+
+###
