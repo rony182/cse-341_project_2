@@ -1,0 +1,34 @@
+GET http://localhost:8080/users
+# the request above returns a json object with all contacts data for mongodb database. No database is connected.
+
+###
+GET http://localhost:8080/users/640939eacbd8059e3fdbf253
+# the request above returns a json object with a single contact data for mongodb database. No database is connected.
+
+###
+POST http://localhost:8080/users/ HTTP/1.1 content-type: application/json
+
+{
+    "firstName": "Rony",
+    "lastName": "Mondal",
+    "email": "rony@email.com",
+    "password": "12345"
+}
+
+# the request above creates a json object with a single contact data for mongodb database. No database is connected.
+###
+PUT http://localhost:8080/users HTTP/1.1 content-type: application/json
+
+{
+    "firstName": "Rony Nickson",
+    "lastName": "Mondal",
+    "email": "rony.n@email.com",
+    "password": "12345"
+}
+
+# the request above updates a json object with a single contact data for mongodb database. No database is connected.
+
+###
+DELETE http://localhost:8080/users/ HTTP/1.1
+
+# the request above deletes a json object with a single contact data for mongodb database. No database is connected.

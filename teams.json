@@ -1,0 +1,29 @@
+[
+    {
+        "teamName": "Boca Juniors",
+        "coachName": "Miguel Ángel Russo",
+        "homeCity": "Buenos Aires",
+        "foundationYear": 1905,
+        "stadiumName": "La Bombonera",
+        "capacity": 49000,
+        "division": "Superliga Argentina"
+    },
+    {
+        "teamName": "River Plate",
+        "coachName": "Marcelo Gallardo",
+        "homeCity": "Buenos Aires",
+        "foundationYear": 1901,
+        "stadiumName": "El Monumental",
+        "capacity": 70000,
+        "division": "Superliga Argentina"
+    },
+    {
+        "teamName": "San Lorenzo",
+        "coachName": "Juan Antonio Pizzi",
+        "homeCity": "Buenos Aires",
+        "foundationYear": 1908,
+        "stadiumName": "Estadio Pedro Bidegain",
+        "capacity": 47300,
+        "division": "Superliga Argentina"
+    }
+]

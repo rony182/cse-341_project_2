@@ -1,0 +1,20 @@
+{
+    "contact": {
+        "firstName": "John",
+        "lastName": "Doe",
+        "email": "John@email.com",
+        "password": "12345"
+    },
+    "contact2": {
+        "firstName": "Jane",
+        "lastName": "Potter",
+        "email": "jane@email.com",
+        "password": "12345"
+    },
+    "contact3": {
+        "firstName": "Braden",
+        "lastName": "Smith",
+        "email": "braden@email.com",
+        "password": "12345"
+    }
+}

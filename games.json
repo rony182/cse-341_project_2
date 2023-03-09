@@ -1,0 +1,42 @@
+[
+    {
+      "gameDate": "2022-02-12",
+      "time": "20:00",
+      "homeTeam": "Boca Juniors",
+      "awayTeam": "River Plate",
+      "location": "La Bombonera",
+      "attendance": 48387,
+      "finalScore": "1-1",
+      "recap": "A tense and exciting match between two of the league's top teams ended in a draw, with both sides playing well and creating chances throughout the game. Boca took the lead early on through a superb goal from Carlos Tevez, but River fought back and equalized in the second half through a well-placed shot from Julián Álvarez. Despite some late pressure from both teams, neither side could find a winner and the match ended in a draw."
+    },
+    {
+      "gameDate": "2022-02-19",
+      "time": "18:00",
+      "homeTeam": "San Lorenzo",
+      "awayTeam": "Huracán",
+      "location": "Estadio Pedro Bidegain",
+      "attendance": 29487,
+      "finalScore": "2-0",
+      "recap": "San Lorenzo dominated this match from start to finish, with a strong performance from their midfield and attack. Goals from Franco Di Santo and Nicolás Fernández in the first half gave the home team a comfortable lead, and they never looked back from there. Huracán tried to mount a comeback in the second half, but San Lorenzo's defense held firm and they secured a well-deserved victory."
+    },
+    {
+      "gameDate": "2022-03-02",
+      "time": "21:00",
+      "homeTeam": "Newell's Old Boys",
+      "awayTeam": "Rosario Central",
+      "location": "Estadio Marcelo Bielsa",
+      "attendance": 25876,
+      "finalScore": "1-1",
+      "recap": "This local derby between Newell's Old Boys and Rosario Central was a tense and hard-fought affair, with both teams creating chances and playing some attractive soccer. The first half was even, with both teams trading blows and neither side able to take the lead. In the second half, Newell's took the lead through a well-taken goal from Jonatan Cristaldo, but Rosario Central fought back and equalized late on through a header from Marco Ruben. The match ended in a draw, which was probably a fair result given how evenly-matched the two teams were."
+    },
+    {
+      "gameDate": "2022-03-12",
+      "time": "20:30",
+      "homeTeam": "Independiente",
+      "awayTeam": "Racing Club",
+      "location": "Estadio Libertadores de América",
+      "attendance": 33567,
+      "finalScore": "0-2",
+      "recap": "In this intense and physical match between two bitter rivals, Racing Club came out on top thanks to two well-taken goals from Tomás Chancalay and Maximiliano Lovera. Independiente had some chances of their own, but were unable to convert them and Racing's defense held firm to secure the victory. The match was marred by several yellow cards and a red card for Independiente's Lucas Romero, who was sent off for a second bookable offense in the second half."
+    }
+]
