@@ -5,7 +5,7 @@ const doc = {
     title: 'My Sports API',
     description: 'Description',
   },
-  host: ['localhost:8080','cse-341-project2.onrender.com'],
+  host: ['cse-341-project2.onrender.com'],
   schemes: ['https', 'http'],
 };
 
