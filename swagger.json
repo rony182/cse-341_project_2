@@ -5,12 +5,22 @@
     "description": "Description",
     "version": "1.0.0"
   },
-  "host": ["cse-341-project2.onrender.com"],
+  "host": [
+    "cse-341-project2.onrender.com"
+  ],
   "basePath": "/",
   "schemes": [
-    "https"
+    "https",
+    "http"
   ],
   "paths": {
+    "/api-docs": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
     "/users/": {
       "get": {
         "description": "",
@@ -21,6 +31,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -55,6 +68,9 @@
         "responses": {
           "201": {
             "description": "Created"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
           },
           "500": {
             "description": "Internal Server Error"
@@ -80,6 +96,9 @@
           "200": {
             "description": "OK"
           },
+          "404": {
+            "description": "Not Found"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -120,6 +139,9 @@
           "204": {
             "description": "No Content"
           },
+          "422": {
+            "description": "Unprocessable Entity"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -139,17 +161,13 @@
           "200": {
             "description": "OK"
           },
+          "404": {
+            "description": "Not Found"
+          },
           "500": {
             "description": "Internal Server Error"
           }
         }
-      }
-    },
-    "/api-docs": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
       }
     },
     "/teams/": {
@@ -162,6 +180,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -205,6 +226,9 @@
         "responses": {
           "201": {
             "description": "Created"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
           },
           "500": {
             "description": "Internal Server Error"
@@ -230,6 +254,9 @@
           "200": {
             "description": "OK"
           },
+          "404": {
+            "description": "Not Found"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -279,6 +306,9 @@
           "204": {
             "description": "No Content"
           },
+          "422": {
+            "description": "Unprocessable Entity"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -298,6 +328,9 @@
           "200": {
             "description": "OK"
           },
+          "404": {
+            "description": "Not Found"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -314,6 +347,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -357,6 +393,9 @@
         "responses": {
           "201": {
             "description": "Created"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
           },
           "500": {
             "description": "Internal Server Error"
@@ -382,6 +421,9 @@
           "200": {
             "description": "OK"
           },
+          "404": {
+            "description": "Not Found"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -431,6 +473,9 @@
           "204": {
             "description": "No Content"
           },
+          "422": {
+            "description": "Unprocessable Entity"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -450,6 +495,9 @@
           "200": {
             "description": "OK"
           },
+          "404": {
+            "description": "Not Found"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -466,6 +514,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -513,6 +564,9 @@
           "201": {
             "description": "Created"
           },
+          "422": {
+            "description": "Unprocessable Entity"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -536,6 +590,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -589,6 +646,9 @@
           "204": {
             "description": "No Content"
           },
+          "422": {
+            "description": "Unprocessable Entity"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -607,6 +667,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
