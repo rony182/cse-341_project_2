@@ -1,5 +1,5 @@
 const mongodb = require('../db/connect');
-
+const { validationResult } = require('express-validator');
 const ObjectId = require('mongodb').ObjectId;
 
 const getGames= async (req, res, next) => {

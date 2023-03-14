@@ -1,4 +1,5 @@
 const mongodb = require('../db/connect');
+const { validationResult } = require('express-validator');
 
 const ObjectId = require('mongodb').ObjectId;
 
@@ -71,7 +72,7 @@ const createTeam = async (req, res, next) => {
         .json(response.error || "Some error occurred while creating the team.");
     }
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json(err.message);
   }
 };
 

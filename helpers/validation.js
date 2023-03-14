@@ -18,8 +18,8 @@ const userCreation = [
 
 const teamCreation = [
   check("teanName", "Team name is required").not().isEmpty(),
-  check("coachName", "Coach name is required").isString().isEmpty(),
-  check("homeCity", "Home city is required").isString().isEmpty(),
+  check("coachName", "Coach name is required").not().isEmpty(),
+  check("homeCity", "Home city is required").not().isEmpty(),
   check("foundationYear")
     .notEmpty()
     .withMessage("Foundation year is required.")
@@ -27,22 +27,27 @@ const teamCreation = [
     .withMessage(
       "Foundation year must be a valid year between 1900 and the current year."
     ),
-  check("stadiumName", "Stadium name is required").isString().isEmpty(),
+  check("stadiumName", "Stadium name is required").not().isEmpty(),
   check("capacity", "Capacity is required").notEmpty().isNumeric(),
-  check("division", "Division is required").isString().isEmpty(),
+  check("division", "Division is required").not().isEmpty(),
 ];
 
 const playerCreation = [
   check("playerName", "Player name is required").not().isEmpty(),
-  check("position", "Position is required").isString().isEmpty(),
+  check("position", "Position is required").not().isEmpty(),
   check("height", "Height is required").notEmpty().isNumeric(),
   check("weight", "Weight is required").notEmpty().isNumeric(),
-  check("birthdate", "Birthdate is required").notEmpty().isDate(),
-  check("nationality", "Nationality is required").isString().isEmpty(),
+  check("birthdate", "Birthdate is required and need to be a valid date before today")
+    .notEmpty()
+    .isDate()
+    .isBefore(new Date().toISOString().split('T')[0]),
+  check("nationality", "Nationality is required").not().isEmpty(),
   check("experienceYears", "Experience years is required")
     .notEmpty()
     .isNumeric(),
 ];
+
+
 
 const gameCreation = [
   check("homeTeam", "Home team is required").notEmpty(),
