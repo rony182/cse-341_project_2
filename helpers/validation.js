@@ -52,7 +52,7 @@ const playerCreation = [
 const gameCreation = [
   check("homeTeam", "Home team is required").notEmpty(),
   check("awayTeam", "Away team is required").notEmpty(),
-  check("gameDate", "Game date is required").notEmpty().isDate(),
+  check("gameDate", "Game date most be a valid Date in the format yyyy-mm-dd").isDate().notEmpty(),
   check("time", "Time is required and must be in HH:MM format.")
     .notEmpty()
     .matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/),
