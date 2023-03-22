@@ -1,5 +1,5 @@
 const { validationResult } = require('express-validator');
-const Game = require('../models/game');
+const Game = require('../models/Game');
 
 const getGames = async (req, res, next) => {
   try {
