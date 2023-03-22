@@ -46,7 +46,6 @@ const getUser = async (req, res, next) => {
   }
 };
 
-
 const logUser = async (req, res, next) => {
   try {
     const errors = validationResult(req);
@@ -54,16 +53,17 @@ const logUser = async (req, res, next) => {
       return res.status(422).json({ errors: errors.array() });
     }
 
+    const password = req.body.password;
     const existingUser = await User.findOne({ email: req.body.email });
 
     if (!existingUser) {
       return res.status(401).json({ error: "Incorrect email or password" });
     }
 
-    const passwordMatch = await comparePassword(req.body.password, existingUser.password);
+    const passwordMatch = await comparePassword(password, existingUser.password);
 
     if (!passwordMatch) {
-      return res.status(401).json({ error: "Incorrect email or password" });
+      return res.status(401).json({ error: "Incorrect password" });
     }
 
     const token = jwt.sign({ id: existingUser._id, email: existingUser.email }, process.env.SECRET_KEY);
@@ -76,6 +76,7 @@ const logUser = async (req, res, next) => {
     res.status(500).json({ error: "Failed to log in user" });
   }
 };
+
 
 
 
@@ -111,6 +112,7 @@ const createUser = async (req, res, next) => {
     res.status(500).json({ error: err.message });
   }
 };
+
 const updateUser = async (req, res, next) => {
   try {
     var errors = validationResult(req);
@@ -173,9 +175,16 @@ module.exports = {
 
 const encryptPassword = async (password) => {
   const salt = await bcrypt.genSalt(10);
-  return await bcrypt.hash(password, salt);
+  let hashedPassword = await bcrypt.hash(password, salt);
+  return hashedPassword;
 };
 
-const comparePassword = async (password, receivedPassword) => {
-  return await bcrypt.compare(password, receivedPassword);
+const comparePassword = async (password, hashedPassword) => {
+  try {
+    const isMatch = await bcrypt.compare(password, hashedPassword);
+    return isMatch;
+  } catch (error) {
+    throw new Error(error);
+  }
 };
+
