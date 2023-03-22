@@ -1,55 +1,78 @@
-const mongodb = require('../db/connect');
 const { validationResult } = require('express-validator');
+const Team = require('../models/Team');
+const mongoose = require("mongoose");
 
-const ObjectId = require('mongodb').ObjectId;
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
-const getTeams= async (req, res, next) => {
+const createTeam = async (req, res, next) => {
   try {
-    const result = await mongodb.getDb().db('project2').collection("teams").find();
-    result.toArray().then((lists) => {
-      if (lists.length === 0) {
-        res.status(404).json({ error: "No team found" });
-      } else {
-        res.setHeader("Content-Type", "application/json");
-        res.status(200).json(lists);
-      }
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+    const team = new Team({
+      teamName: req.body.teamName,
+      coachName: req.body.coachName,
+      homeCity: req.body.homeCity,
+      foundationYear: req.body.foundationYear,
+      stadiumName: req.body.stadiumName,
+      capacity: req.body.capacity,
+      division: req.body.division,
     });
+    const savedTeam = await team.save();
+    if (savedTeam) {
+      res.status(201).json(savedTeam);
+    } else {
+      res.status(500).json({ error: "Some error occurred while creating the team." });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+
+const getTeams = async (req, res, next) => {
+  try {
+    const teams = await Team.find();
+    if (teams.length === 0) {
+      res.status(404).json({ error: "No team found" });
+    } else {
+      res.setHeader("Content-Type", "application/json");
+      res.status(200).json(teams);
+    }
   } catch (err) {
     res.status(500).json(err);
   }
 };
 
-
 const getTeam = async (req, res, next) => {
   try {
-    const teamId = new ObjectId(req.params.id);
-    const result = await mongodb
-      .getDb()
-      .db('project2')
-      .collection('teams')
-      .find({ _id: teamId })
-      .toArray();
+    const teamId = req.params.id;
+    const team = await Team.findById(teamId);
 
-    if (result.length === 0) {
+    if (!team) {
       // If no team is found, return a 404 error
       return res.status(404).json({ message: 'Team not found' });
     }
 
     // If a team is found, return it as JSON
     res.setHeader('Content-Type', 'application/json');
-    res.status(200).json(result[0]);
+    res.status(200).json(team);
   } catch (err) {
     res.status(500).json(err);
   }
 };
 
-
-const createTeam = async (req, res, next) => {
+const updateTeam = async (req, res, next) => {
   try {
     var errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
+    const teamId = req.params.id;
     const team = {
       teamName: req.body.teamName,
       coachName: req.body.coachName,
@@ -59,45 +82,7 @@ const createTeam = async (req, res, next) => {
       capacity: req.body.capacity,
       division: req.body.division,
     };
-    const response = await mongodb
-      .getDb()
-      .db("project2")
-      .collection("teams")
-      .insertOne(team);
-    if (response.acknowledged) {
-      res.status(201).json(response);
-    } else {
-      res
-        .status(500)
-        .json(response.error || "Some error occurred while creating the team.");
-    }
-  } catch (err) {
-    res.status(500).json(err.message);
-  }
-};
-
-const updateTeam= async (req, res, next) => {
-  try {
-    var errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.array() });
-    }
-    const teamId = new ObjectId(req.params.id);
-    const team = {
-      teamName: req.body.teamName,
-      coachName: req.body.coachName,
-      homeCity: req.body.homeCity,
-      foundationYear: req.body.foundationYear,
-      stadiumName: req.body.stadiumName,
-      capacity: req.body.capacity,
-      division: req.body.division,
-    };
-    const response = await mongodb
-      .getDb()
-      .db('project2')
-      .collection("teams")
-      .replaceOne({ _id: teamId }, team);
-    console.log(response);
+    const response = await Team.updateOne({ _id: teamId }, team);
     if (response.modifiedCount > 0) {
       res.status(204).send();
     } else {
@@ -114,12 +99,8 @@ const updateTeam= async (req, res, next) => {
 
 const deleteTeam = async (req, res, next) => {
   try {
-    const teamId = new ObjectId(req.params.id);
-    const response = await mongodb
-      .getDb()
-      .db('project2')
-      .collection('teams')
-      .deleteOne({ _id: teamId }, true);
+    const teamId = req.params.id;
+    const response = await Team.deleteOne({ _id: teamId });
 
     if (response.deletedCount > 0) {
       res.status(200).send();
@@ -131,6 +112,7 @@ const deleteTeam = async (req, res, next) => {
     res.status(500).json(err);
   }
 };
+
 
 
 module.exports = {

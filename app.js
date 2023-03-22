@@ -1,8 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const mongodb = require("./db/connect");
+const mongoose = require("mongoose");
+const passport = require("passport");
+const session = require("express-session");
+const dotenv = require('dotenv');
+dotenv.config();
 
 const port = process.env.PORT || 8080;
+require("./helpers/passport");
 
 const app = express();
 const allow = process.env.ALLOW_ORIGIN || "*";
@@ -22,12 +27,28 @@ app
   })
   .use("/", require("./routes"));
 
-mongodb.initDb((err, db) => {
-  if (err) {
-    console.log(err);
-  } else {
-    app.listen(port, () => {
-      console.log(`Connected to DB and listening on ${port}`);
-    });
-  }
+app.use(session({
+  secret: 'mysecret',
+  resave: false,
+  saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+mongoose.connection.on("connected", () => {
+  console.log(`Connected to DB and listening on ${port}`);
+});
+
+mongoose.connection.on("error", (err) => {
+  console.log(`Mongoose connection error: ${err}`);
+});
+
+app.listen(port, () => {
+  console.log(`Listening on ${port}`);
 });

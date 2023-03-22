@@ -61,8 +61,14 @@ const gameCreation = [
   check("finalScore", "Final score is required").notEmpty().isString(),
   check("recap", "Recap is required").notEmpty().isString(),
 ];
-      
+
+const login = [
+  check("email", "Please include a valid email")
+    .isEmail()
+    .normalizeEmail({ gmail_remove_dots: true }),
+  check("password", "Please include a password").not().isEmpty(),
+];
 
 module.exports = {
-    userCreation, teamCreation , playerCreation, gameCreation
+    userCreation, teamCreation , playerCreation, gameCreation, login
 }

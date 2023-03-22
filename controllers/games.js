@@ -1,51 +1,42 @@
-const mongodb = require('../db/connect');
 const { validationResult } = require('express-validator');
-const ObjectId = require('mongodb').ObjectId;
+const Game = require('../models/game');
 
-const getGames= async (req, res, next) => {
+const getGames = async (req, res, next) => {
   try {
-    const result = await mongodb.getDb().db('project2').collection("games").find();
-    result.toArray().then((lists) => {
-      if (lists.length === 0) {
-        res.status(404).json({ message: "No Games found." });
-      } else {
-        res.setHeader("Content-Type", "application/json");
-        res.status(200).json(lists);
-      }
-    });
+    const games = await Game.find();
+    if (games.length === 0) {
+      res.status(404).json({ message: "No Games found." });
+    } else {
+      res.setHeader("Content-Type", "application/json");
+      res.status(200).json(games);
+    }
   } catch (err) {
     res.status(500).json(err);
   }
 };
 
-const getGame= async (req, res, next) => {
+const getGame = async (req, res, next) => {
   try {
-    const gameId = new ObjectId(req.params.id);
-    const result = await mongodb
-      .getDb()
-      .db('project2')
-      .collection("games")
-      .find({ _id: gameId });
-    result.toArray().then((lists) => {
-      if (lists.length === 0) {
-        res.status(404).json({ message: "Game not found." });
-      } else {
-        res.setHeader("Content-Type", "application/json");
-        res.status(200).json(lists[0]);
-      }
-    });
+    const gameId = req.params.id;
+    const game = await Game.findById(gameId);
+    if (!game) {
+      res.status(404).json({ message: "Game not found." });
+    } else {
+      res.setHeader("Content-Type", "application/json");
+      res.status(200).json(game);
+    }
   } catch (err) {
     res.status(500).json(err);
   }
 };
 
-const createGame= async (req, res, next) => {
+const createGame = async (req, res, next) => {
   try {
-    var errors = validationResult(req);
+    const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
-    const game = {
+    const game = new Game({
       gameDate: req.body.gameDate,
       time: req.body.time,
       homeTeam: req.body.homeTeam,
@@ -53,14 +44,10 @@ const createGame= async (req, res, next) => {
       location: req.body.location,
       attendance: req.body.attendance,
       finalScore: req.body.finalScore,
-      recap: req.body.recap
-    };
-    const response = await mongodb
-      .getDb()
-      .db('project2')
-      .collection("games")
-      .insertOne(game);
-    if (response.acknowledged) {
+      recap: req.body.recap,
+    });
+    const response = await game.save();
+    if (response) {
       res.status(201).json(response);
     } else {
       res
@@ -74,13 +61,13 @@ const createGame= async (req, res, next) => {
   }
 };
 
-const updateGame= async (req, res, next) => {
+const updateGame = async (req, res, next) => {
   try {
-    var errors = validationResult(req);
+    const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
-    const gameId = new ObjectId(req.params.id);
+    const gameId = req.params.id;
     const game = {
       gameDate: req.body.gameDate,
       time: req.body.time,
@@ -89,15 +76,11 @@ const updateGame= async (req, res, next) => {
       location: req.body.location,
       attendance: req.body.attendance,
       finalScore: req.body.finalScore,
-      recap: req.body.recap
+      recap: req.body.recap,
     };
-    const response = await mongodb
-      .getDb()
-      .db('project2')
-      .collection("games")
-      .replaceOne({ _id: gameId }, game);
+    const response = await Game.findByIdAndUpdate(gameId, game);
     console.log(response);
-    if (response.modifiedCount > 0) {
+    if (response) {
       res.status(204).send();
     } else {
       res
@@ -113,14 +96,10 @@ const updateGame= async (req, res, next) => {
 
 const deleteGame = async (req, res, next) => {
   try {
-    const gameId = new ObjectId(req.params.id);
-    const response = await mongodb
-      .getDb()
-      .db('project2')
-      .collection("games")
-      .deleteOne({ _id: gameId }, true);
+    const gameId = req.params.id;
+    const response = await Game.findByIdAndDelete(gameId);
     console.log(response);
-    if (response.deletedCount > 0) {
+    if (response) {
       res.status(200).send();
     } else {
       res.status(404).json({ message: "Game not found." });
@@ -129,6 +108,7 @@ const deleteGame = async (req, res, next) => {
     res.status(500).json(err);
   }
 };
+
 
 module.exports = {
   getGames,

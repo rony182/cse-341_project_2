@@ -1,44 +1,37 @@
-const mongodb = require('../db/connect');
 const { validationResult } = require('express-validator');
+const Player = require('../models/Player');
+const mongoose = require("mongoose");
 
-const ObjectId = require('mongodb').ObjectId;
 
-const getPlayers= async (req, res, next) => {
+const getPlayers = async (req, res, next) => {
   try {
-    const result = await mongodb.getDb().db('project2').collection("players").find();
-    result.toArray().then((lists) => {
-      if (lists.length === 0) {
-        res.status(404).json({ message: "No players found." });
-      } else {
-        res.setHeader("Content-Type", "application/json");
-        res.status(200).json(lists);
-      }
-    });
+    const players = await Player.find({});
+    if (players.length === 0) {
+      res.status(404).json({ message: "No players found." });
+    } else {
+      res.setHeader("Content-Type", "application/json");
+      res.status(200).json(players);
+    }
   } catch (err) {
     res.status(500).json(err);
   }
 };
 
-const getPlayer= async (req, res, next) => {
+const getPlayer = async (req, res, next) => {
   try {
-    const playerId = new ObjectId(req.params.id);
-    const result = await mongodb
-      .getDb()
-      .db('project2')
-      .collection("players")
-      .find({ _id: playerId });
-    result.toArray().then((lists) => {
-      if (lists.length === 0) {
-        res.status(404).json({ message: "Player not found." });
-      } else {
-        res.setHeader("Content-Type", "application/json");
-        res.status(200).json(lists[0]);
-      }
-    });
+    const playerId = req.params.id;
+    const player = await Player.findById(playerId);
+    if (!player) {
+      res.status(404).json({ message: "Player not found." });
+    } else {
+      res.setHeader("Content-Type", "application/json");
+      res.status(200).json(player);
+    }
   } catch (err) {
     res.status(500).json(err);
   }
 };
+
 
 const createPlayer = async (req, res, next) => {
   try {
@@ -46,7 +39,7 @@ const createPlayer = async (req, res, next) => {
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
-    const player = {
+    const player = new Player({
       playerName: req.body.playerName,
       position: req.body.position,
       height: req.body.height,
@@ -54,13 +47,9 @@ const createPlayer = async (req, res, next) => {
       birthdate: req.body.birthdate,
       nationality: req.body.nationality,
       experienceYears: req.body.experienceYears,
-    };
-    const response = await mongodb
-      .getDb()
-      .db("project2")
-      .collection("players")
-      .insertOne(player);
-    if (response.acknowledged) {
+    });
+    const response = await player.save();
+    if (response) {
       res.status(201).json(response);
     } else {
       res
@@ -76,11 +65,11 @@ const createPlayer = async (req, res, next) => {
 
 const updatePlayer = async (req, res, next) => {
   try {
-    var errors = validationResult(req);
+    const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
-    const playerId = new ObjectId(req.params.id);
+    const playerId = req.params.id;
     const player = {
       playerName: req.body.playerName,
       position: req.body.position,
@@ -90,11 +79,8 @@ const updatePlayer = async (req, res, next) => {
       nationality: req.body.nationality,
       experienceYears: req.body.experienceYears,
     };
-    const response = await mongodb
-      .getDb()
-      .db("project2")
-      .collection("players")
-      .replaceOne({ _id: playerId }, player);
+    const response = await Player.updateOne({ _id: playerId }, player);
+    console.log(response);
     if (response.modifiedCount > 0) {
       res.status(204).send();
     } else {
@@ -111,12 +97,8 @@ const updatePlayer = async (req, res, next) => {
 
 const deletePlayer = async (req, res, next) => {
   try {
-    const playerId = new ObjectId(req.params.id);
-    const response = await mongodb
-      .getDb()
-      .db("project2")
-      .collection("players")
-      .deleteOne({ _id: playerId }, true);
+    const playerId = req.params.id;
+    const response = await Player.deleteOne({ _id: playerId });
     if (response.deletedCount > 0) {
       res.status(200).send();
     } else {
@@ -126,6 +108,7 @@ const deletePlayer = async (req, res, next) => {
     res.status(500).json(err);
   }
 };
+
 
 module.exports = {
   getPlayers,

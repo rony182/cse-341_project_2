@@ -1,28 +1,56 @@
-const passport = require('passport');
-const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
-const dotenv = require('dotenv');
 
-// configure passport
-passport.serializeUser(function(user, done) {
-  done(null, user);
+
+const passport = require("passport");
+const mongodb = require("../db/connect");
+
+const LocalStrategy = require("passport-local").Strategy;
+
+const bcrypt = require("bcryptjs");
+
+passport.use(
+  new LocalStrategy(
+    {
+      email: "email",
+      password: "password",
+    },
+    async (email, password, done) => {
+      try {
+        const existingUser = await mongodb
+          .getDb()
+          .db("project2")
+          .collection("users")
+          .findOne({ email: email });
+        if (!existingUser) {
+          return done(null, false, { message: "Incorrect email" });
+        }
+        const match = await bcrypt.compare(password, existingUser.password);
+        if (!match) {
+          return done(null, false, { message: "Incorrect password" });
+        }
+        return done(null, existingUser);
+      } catch (err) {
+        return done(err);
+      }
+    }
+  )
+);
+
+passport.serializeUser((user, done) => {
+  done(null, user._id);
 });
 
-passport.deserializeUser(function(user, done) {
-  done(null, user);
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await mongodb
+      .getDb()
+      .db("project2")
+      .collection("users")
+      .findOne({ _id: id });
+    if (!user) {
+      return done(new Error("User not found"));
+    }
+    return done(null, user);
+  } catch (err) {
+    return done(err);
+  }
 });
-
-// configure session
-app.use(session({
-  secret: 'your-secret-key',
-  resave: true,
-  saveUninitialized: true,
-  store: new MongoStore({
-    url: env.MONGODB_URI,
-    collection: 'sessions'
-  })
-}));
-
-// initialize passport
-app.use(passport.initialize());
-app.use(passport.session());
